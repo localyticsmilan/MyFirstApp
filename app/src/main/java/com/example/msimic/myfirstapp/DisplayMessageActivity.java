@@ -34,11 +34,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     //Location Searched Localytics event string
-    private final static String TAG_LOCATION_SEARCHED = "Location Searched";
+    private final static String TAG_MILAN_EVENT = "Milan's Special Event";
 
     //Localytics event tag method - Location Searched
     public void locationSearched() {
-        Localytics.tagEvent(DisplayMessageActivity.TAG_LOCATION_SEARCHED);
+        Localytics.tagEvent(DisplayMessageActivity.TAG_MILAN_EVENT);
     }
 
     /*@Override
