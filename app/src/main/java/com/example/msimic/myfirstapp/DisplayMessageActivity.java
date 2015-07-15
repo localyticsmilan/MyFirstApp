@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import com.localytics.android.Localytics;
 
@@ -30,15 +33,23 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(textView);
 
         //call the Localytics tag method
-        this.locationSearched();
+        this.milanEvent();
     }
 
-    //Location Searched Localytics event string
-    private final static String TAG_MILAN_EVENT = "Milan's Special Event";
+    //Localytics event string
+    private static String TAG_MILAN_EVENT = "Milan's Special Event";
+    private static String OPTIONS_SAVED = "Options Saved";
+    private static Random randomGenerator = new Random();
+    private int optionsSaved;
 
-    //Localytics event tag method - Location Searched
-    public void locationSearched() {
-        Localytics.tagEvent(DisplayMessageActivity.TAG_MILAN_EVENT);
+    //Localytics event tag method
+    public void milanEvent() {
+
+        optionsSaved = randomGenerator.nextInt(100);
+
+        Map<String, String> values = new HashMap<String, String>();
+        values.put(OPTIONS_SAVED, String.valueOf(this.optionsSaved));
+        Localytics.tagEvent(this.TAG_MILAN_EVENT, values);
     }
 
     /*@Override
