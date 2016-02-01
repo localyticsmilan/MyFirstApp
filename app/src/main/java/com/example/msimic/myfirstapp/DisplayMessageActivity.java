@@ -34,10 +34,12 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         //call the Localytics tag method
         this.milanEvent();
+
+        Localytics.triggerInAppMessage("myTriggerName");
     }
 
     //Localytics event string
-    private static String TAG_MILAN_EVENT = "Milan's Special Event";
+    private static String TAG_MILAN_EVENT = "Milan's Special Event 30 Sept";
     private static String OPTIONS_SAVED = "Options Saved";
     private static Random randomGenerator = new Random();
     private int optionsSaved;
@@ -45,11 +47,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
     //Localytics event tag method
     public void milanEvent() {
 
-        optionsSaved = randomGenerator.nextInt(100);
+        //optionsSaved = randomGenerator.nextInt(100);
 
-        Map<String, String> values = new HashMap<String, String>();
-        values.put(OPTIONS_SAVED, String.valueOf(this.optionsSaved));
-        Localytics.tagEvent(this.TAG_MILAN_EVENT, values);
+        Map<String,String> values = new HashMap<String,String>();
+        //values.put(OPTIONS_SAVED, String.valueOf(this.optionsSaved));
+        values.put("menu test 3", "true");
+        //Localytics.tagEvent(this.TAG_MILAN_EVENT, values);
+        Localytics.tagEvent("Display Message", values);
+
     }
 
     /*@Override
@@ -73,4 +78,23 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Localytics.openSession();
+        Localytics.tagScreen("Display Message");
+        Localytics.triggerInAppMessage("Display Message");
+        Localytics.upload();
+    }
+
+    @Override
+    protected void onPause() {
+        Localytics.closeSession();
+        Localytics.upload();
+
+        super.onPause();
+    }
+
 }

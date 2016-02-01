@@ -19,6 +19,37 @@ public class MyActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        // For Localytics Push Messaging
+        Localytics.registerPush("922701104596");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Localytics.openSession();
+        Localytics.tagScreen("Enter Message");
+        Localytics.triggerInAppMessage("Enter Message");
+        Localytics.upload();
+
+        //handle test mode
+        Localytics.handleTestMode(getIntent());
+    }
+
+    @Override
+    protected void onPause() {
+        Localytics.closeSession();
+        Localytics.upload();
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override

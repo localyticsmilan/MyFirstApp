@@ -5,15 +5,40 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
    // optional but highly recommended
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission android:name="com.example.msimic.myfirstapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.msimic.myfirstapp.permission.C2D_MESSAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="LOCALYTICS_APP_KEY"
-            android:value="24bda322df2a476a44c2510-55321786-060f-11e5-9c94-00739d24cb30" />
+
+        <meta-data android:name="LOCALYTICS_APP_KEY"
+            android:value="24bda322df2a476a44c2510-55321786-060f-11e5-9c94-00739d24cb30"/>
+
+        <receiver
+            android:name="com.localytics.android.ReferralReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.localytics.android.PushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.msimic.myfirstapp" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".MyActivity"
@@ -23,11 +48,23 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!--test mode-->
+            <intent-filter>
+                <data android:scheme="amp24bda322df2a476a44c2510-55321786-060f-11e5-9c94-00739d24cb30" />
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".DisplayMessageActivity"
             android:label="@string/title_activity_display_message" >
         </activity>
+
+        <activity android:name="com.localytics.android.PushTrackingActivity"/>
+
     </application>
 
 </manifest>
